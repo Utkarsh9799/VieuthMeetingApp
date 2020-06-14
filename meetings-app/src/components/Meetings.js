@@ -19,7 +19,12 @@ function Meetings() {
 		console.log(userDate);
 		try {
 			const res = await axios.get(
-				`api/schedule?date=${userDate}/${userMonth}/${userYear}`
+				`api/schedule?date=${userDate}/${userMonth}/${userYear}`,
+				{
+					proxy: {
+						host: 'http://fathomless-shelf-5846.herokuapp.com/',
+					},
+				}
 			);
 			console.log(res);
 			const sorted = res.data.sort((a, b) => {

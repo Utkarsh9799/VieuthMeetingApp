@@ -24,6 +24,7 @@ function AddMeeting(props) {
 	const handleSubmit = async (e) => {
 		console.log(data);
 		var ans = slotAvailable(data);
+		console.log('x' + ans);
 		if (ans) {
 			setStatus('success');
 			alert('Slot available!');
@@ -35,7 +36,8 @@ function AddMeeting(props) {
 		e.preventDefault();
 	};
 
-	const onChange = (e) => {
+	const handleInputChange = (e) => {
+		console.log('Inside handleChange');
 		setData({ ...data, [e.target.name]: e.target.value });
 	};
 
@@ -81,7 +83,7 @@ function AddMeeting(props) {
 					value={newDate}
 					className="datepicker"
 					placeholder="Meeting Date"
-					onChange={(e) => onChange(e)}
+					onChange={handleInputChange}
 				/>
 				{/* <label style={{ display: 'inline-block', width: '50%' }}>
 					Start Time
@@ -94,7 +96,7 @@ function AddMeeting(props) {
 					name="startTime"
 					value={startTime}
 					placeholder="00:00"
-					onChange={(e) => onChange(e)}
+					onChange={handleInputChange}
 					className="timepicker"
 					placeholder="Start Time"
 				/>
@@ -112,7 +114,7 @@ function AddMeeting(props) {
 					name="endTime"
 					value={endTime}
 					placeholder="00:00"
-					onChange={(e) => onChange(e)}
+					onChange={handleInputChange}
 					placeholder="End Time"
 				/>
 				<div className="input-field col s12">
@@ -120,7 +122,7 @@ function AddMeeting(props) {
 						id="textarea1"
 						className="materialize-textarea"
 					></textarea>
-					<label for="textarea1">Description</label>
+					<label htmlFor="textarea1">Description</label>
 				</div>
 				{/* <input
 					type="submit"

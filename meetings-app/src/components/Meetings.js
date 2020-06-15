@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Meetings() {
 	const [state, setState] = useState([]);
@@ -164,6 +165,20 @@ function Meetings() {
 			) : (
 				<h1>Meetings unavailable!</h1>
 			)}
+			<div
+				style={{
+					textAlign: 'center',
+					marginTop: '3%',
+					marginBottom: '2%',
+				}}
+			>
+				<Link
+					to="/schedule-meeting"
+					className="waves-effect waves-light btn light-blue darken-2"
+				>
+					Add Meeting
+				</Link>
+			</div>
 		</div>
 	);
 }

@@ -1,26 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-function Meetings() {
-	const [state, setState] = useState([]);
-	const [currentDate, setDate] = useState(
-		String(new Date().getDate()).padStart(2, '0')
-	);
-	const [currentMonth, setMonth] = useState(
-		String(new Date().getMonth() + 1).padStart(2, '0')
-	);
-	const [currentYear, setYear] = useState(new Date().getFullYear());
-
-	useEffect(() => {
-		fetchMeetings();
-	}, [currentDate, currentMonth, currentYear]);
-
+function Meetings(props) {
 	const fetchMeetings = async () => {
-		console.log(currentDate);
+		// console.log(props.currentDate);
 		try {
 			const res = await axios.get(
-				`api/schedule?date=${currentDate}/${currentMonth}/${currentYear}`,
+				`api/schedule?date=${props.currentDate}/${props.currentMonth}/${props.currentYear}`,
 				{
 					proxy: {
 						host: 'http://fathomless-shelf-5846.herokuapp.com/',
@@ -28,51 +15,54 @@ function Meetings() {
 				}
 			);
 			console.log(res);
-			const sorted = res.data.sort((a, b) => {
+			const time = res.data.sort((a, b) => {
 				var t1 = a.start_time.replace(':', '');
 				var t2 = b.start_time.replace(':', '');
-				console.log('ti:' + t1);
 				return t1 - t2;
 			});
-			// console.log(sorted)
-			setState(sorted);
+
+			props.setState(time);
 		} catch (error) {
 			console.log(error.message);
 		}
 	};
 
+	useEffect(() => {
+		fetchMeetings();
+	}, [props.currentDate, props.currentMonth, props.currentYear]);
+
 	const prevDate = () => {
-		if (parseInt(currentDate) >= 2) {
-			const newDate = parseInt(currentDate) - 1;
-			setDate(newDate.toString());
+		if (parseInt(props.currentDate) >= 2) {
+			const newDate = parseInt(props.currentDate) - 1;
+			props.setDate(newDate.toString());
 		} else {
-			if (parseInt(currentMonth) >= 2) {
-				const newMonth = parseInt(currentMonth) - 1;
-				setDate(31);
-				setMonth(newMonth);
+			if (parseInt(props.currentMonth) >= 2) {
+				const newMonth = parseInt(props.currentMonth) - 1;
+				props.setDate(31);
+				props.setMonth(newMonth);
 			} else {
-				const newYear = parseInt(currentYear) - 1;
-				setMonth(12);
-				setYear(newYear);
+				const newYear = parseInt(props.currentYear) - 1;
+				props.setMonth(12);
+				props.setYear(newYear);
 			}
 		}
 	};
 
 	const nextDate = () => {
-		if (parseInt(currentDate) == 31) {
-			if (parseInt(currentMonth) == 12) {
-				setDate(1);
-				setMonth(1);
-				const newYear = parseInt(currentYear) + 1;
-				setYear(newYear);
+		if (parseInt(props.currentDate) === 31) {
+			if (parseInt(props.currentMonth) === 12) {
+				props.setDate(1);
+				props.setMonth(1);
+				const newYear = parseInt(props.currentYear) + 1;
+				props.setYear(newYear);
 			} else {
-				setDate(1);
-				const newMonth = parseInt(currentMonth) + 1;
-				setMonth(newMonth);
+				props.setDate(1);
+				const newMonth = parseInt(props.currentMonth) + 1;
+				props.setMonth(newMonth);
 			}
 		} else {
-			const newDate = parseInt(currentDate) + 1;
-			setDate(newDate);
+			const newDate = parseInt(props.currentDate) + 1;
+			props.setDate(newDate);
 		}
 	};
 
@@ -101,7 +91,7 @@ function Meetings() {
 				<h5
 					className="light-blue-text"
 					style={{ padding: '2%' }}
-				>{`${currentDate}/${currentMonth}/${currentYear}`}</h5>
+				>{`${props.currentDate}/${props.currentMonth}/${props.currentYear}`}</h5>
 				<button
 					style={{ all: 'initial' }}
 					onClick={() => {
@@ -117,10 +107,10 @@ function Meetings() {
 				</button>
 			</div>
 
-			{state ? (
-				state.map((meeting) => (
+			{props.state ? (
+				props.state.map((meeting) => (
 					<ul
-						class="collection"
+						className="collection"
 						style={{
 							width: '75%',
 							marginLeft: '12.5%',
@@ -128,6 +118,7 @@ function Meetings() {
 						}}
 					>
 						<li
+							key={meeting.start_time}
 							className="collection-item "
 							style={{ borderRadius: '30px' }}
 						>

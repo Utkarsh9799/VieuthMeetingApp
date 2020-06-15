@@ -22,7 +22,7 @@ function AddMeeting(props) {
 	const [status, setStatus] = useState('initial');
 
 	const handleSubmit = async (e) => {
-		console.log(data);
+		console.log('y' + data);
 		var ans = slotAvailable(data);
 		console.log('x' + ans);
 		if (ans) {
@@ -74,67 +74,58 @@ function AddMeeting(props) {
 			className="container white"
 			style={{ marginTop: '5%', padding: '2%' }}
 		>
-			<form onSubmit={(e) => handleSubmit()}>
-				{/* <label>Date</label> */}
-
+			<form onSubmit={(e) => handleSubmit(e)}>
+				<label>Meeting Date</label>
 				<input
-					type="text"
+					type="date"
+					className="teal lighten-5"
 					name="newDate"
 					value={newDate}
-					className="datepicker"
+					onChange={handleInputChange}
 					placeholder="Meeting Date"
-					onChange={handleInputChange}
 				/>
-				{/* <label style={{ display: 'inline-block', width: '50%' }}>
-					Start Time
-				</label> */}
 
+				<br />
+
+				<label>StartTime </label>
 				<input
-					style={{ width: '40%', marginRight: '10%' }}
-					type="text"
-					required
+					type="time"
+					className="teal lighten-5"
 					name="startTime"
-					value={startTime}
-					placeholder="00:00"
-					onChange={handleInputChange}
-					className="timepicker"
-					placeholder="Start Time"
-				/>
-				{/* <label style={{ display: 'inline-block', width: '50%' }}>
-					End Time
-				</label> */}
-				<input
-					style={{
-						width: '40%',
-						marginLeft: '10%',
-					}}
-					type="text"
-					className="timepicker"
 					required
-					name="endTime"
-					value={endTime}
-					placeholder="00:00"
+					value={startTime}
 					onChange={handleInputChange}
-					placeholder="End Time"
 				/>
+
+				<br />
+
+				<label>EndTime </label>
+				<input
+					type="time"
+					name="endTime"
+					className="teal lighten-5"
+					required
+					value={endTime}
+					onChange={handleInputChange}
+				/>
+
+				<br />
+
 				<div className="input-field col s12">
 					<textarea
 						id="textarea1"
-						className="materialize-textarea"
+						className="materialize-textarea teal lighten-5"
 					></textarea>
 					<label htmlFor="textarea1">Description</label>
 				</div>
-				{/* <input
-					type="submit"
-					className="waves-effect waves-light btn light-blue darken-2"
-					value="Save"
-				/> */}
+				<br />
+
 				<div style={{ textAlign: 'center' }}>
 					{status === 'initial' || status === 'success' ? (
 						<button
 							type="submit"
 							className="waves-effect waves-light btn light-blue darken-2"
-							style={{ width: '15%', marginTop: '2%' }}
+							style={{ width: '15%', marginTop: '1%' }}
 						>
 							Save
 						</button>
@@ -142,7 +133,7 @@ function AddMeeting(props) {
 						<button
 							type="submit"
 							className="disabled waves-effect waves-light btn light-blue darken-2"
-							style={{ width: '15%', marginTop: '2%' }}
+							style={{ width: '15%', marginTop: '1%' }}
 						>
 							Save
 						</button>

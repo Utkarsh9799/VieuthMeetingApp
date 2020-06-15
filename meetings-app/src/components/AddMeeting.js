@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import M from 'materialize-css';
+import 'materialize-css';
 
 function AddMeeting(props) {
-	// Materialize css for datepicker initialise
-	document.addEventListener('DOMContentLoaded', function () {
-		var elems = document.querySelectorAll('.datepicker');
-		var instances = M.Datepicker.init(elems, {});
-	});
-	// Timepicker
-	document.addEventListener('DOMContentLoaded', function () {
-		var elems = document.querySelectorAll('.timepicker');
-		var instances = M.Timepicker.init(elems, { twelveHour: false });
-	});
+	// // Materialize css for datepicker initialise
+	// document.addEventListener('DOMContentLoaded', function () {
+	// 	var elems = document.querySelectorAll('.datepicker');
+	// 	var instances = M.Datepicker.init(elems, {});
+	// });
+	// // Timepicker
+	// document.addEventListener('DOMContentLoaded', function () {
+	// 	var elems = document.querySelectorAll('.timepicker');
+	// 	var instances = M.Timepicker.init(elems, { twelveHour: false });
+	// });
 
 	const [data, setData] = useState({
 		newDate: '',
@@ -87,8 +87,12 @@ function AddMeeting(props) {
 
 				<br />
 
-				<label>StartTime </label>
 				<input
+					style={{
+						width: '40%',
+						marginRight: '10%',
+						marginTop: '2%',
+					}}
 					type="time"
 					className="teal lighten-5"
 					name="startTime"
@@ -97,10 +101,8 @@ function AddMeeting(props) {
 					onChange={handleInputChange}
 				/>
 
-				<br />
-
-				<label>EndTime </label>
 				<input
+					style={{ width: '40%', marginLeft: '10%' }}
 					type="time"
 					name="endTime"
 					className="teal lighten-5"
